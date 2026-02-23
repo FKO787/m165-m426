@@ -1,0 +1,25 @@
+# Target
+.target/
+
+# Node
+.node_modules/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE Files
+
+# VS Code
+.vscode/
+.github/
+
+# VS 2022
+.vs/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Other
