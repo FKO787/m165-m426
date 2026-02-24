@@ -15,15 +15,15 @@ Ist das Mindestziel erreicht worden, können weitere Features definiert werden.
 
 ## Backend
 
-Java
-Spring Boot als Framework
-Maven als Build Tool
+- Java
+- Spring Boot als Framework
+- Maven als Build Tool
 
 ## DatenBank
 
-PostgreSQL
+- PostgreSQL
 
 ## Frontend
 
-TypeScript
-Angular
+- TypeScript  
+- Angular
