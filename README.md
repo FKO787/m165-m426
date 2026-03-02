@@ -14,6 +14,7 @@ Ist das Mindestziel erreicht worden, können weitere Features definiert werden.
 
 Englisch:
 - Für Code (Java, TypeScript, ...)
+- Für Kommentare und Beschreibungen im Code
 - Für Commit-Messages
 
 Deutsch:
@@ -21,14 +22,11 @@ Deutsch:
 - Für die Dokumentation (Projektbeschreibung, README, Wiki)
 - Für GitHub-Issues
 
-Offen:
-- Kommentare im Code?
-
 ## Projektarchitektur
 
 ### Backend
 
-- Java
+- Java 25
 - Spring Boot als Framework
 - Maven als Build Tool
 
