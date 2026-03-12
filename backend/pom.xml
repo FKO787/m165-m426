@@ -93,7 +93,8 @@
                 <version>3.5.5</version>
                 <configuration>
                     <argLine>
-                        -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.jar </argLine>
+                        -javaagent:"${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.jar"
+                    </argLine>
                 </configuration>
             </plugin>
 
