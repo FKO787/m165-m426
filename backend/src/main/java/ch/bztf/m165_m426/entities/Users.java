@@ -20,9 +20,13 @@ public class Users {
         // Hibernate requires Entities to have an empty constructor. Its protected so the IDE stops whining.
     }
 
-    public Users(String name, String email) {
+    private Users(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public static Users create(String name, String email) {
+        return new Users(name, email);
     }
 
     public Long getId() {
