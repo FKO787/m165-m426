@@ -43,8 +43,8 @@ Deutsch:
 
 ### Setup
 
-- [Requirements](FOLGT)
-- [Configuration](FOLGT)
+- [Requirements](http://github.com/FKO787/m165-m426/wiki/Requirements)
+- [Configuration](https://github.com/FKO787/m165-m426/wiki/Configuration)
 
 ### Features
 
