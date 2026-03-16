@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:18.3
+    container_name: m165-m426-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: m165-m426_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: project@bztf
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d m165-m426_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
