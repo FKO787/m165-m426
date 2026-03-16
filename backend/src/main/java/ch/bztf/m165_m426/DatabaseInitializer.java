@@ -22,11 +22,11 @@ public class DatabaseInitializer {
     }
 
     private void addTestUsers() {
-        userRepo.save(Users.create("Max Mustermann", "max.mustermann@example.org"));
+        userRepo.save(Users.create("Max Mustermann", "max.mustermann@example.org", "password"));
 
-        userRepo.save(Users.create("Esteban Venturello", "eve@bztf.ch"));
-        userRepo.save(Users.create("Flavio Köppel", "fko@bztf.ch"));
-        userRepo.save(Users.create("Tobias Nussbaumer", "tnu@bztf.ch"));
-        userRepo.save(Users.create("Noah Bösch", "nbo@bztf.ch"));
+        userRepo.save(Users.create("Esteban Venturello", "eve@bztf.ch", "password"));
+        userRepo.save(Users.create("Flavio Köppel", "fko@bztf.ch", "password"));
+        userRepo.save(Users.create("Tobias Nussbaumer", "tnu@bztf.ch", "password"));
+        userRepo.save(Users.create("Noah Bösch", "nbo@bztf.ch", "password"));
     }
 }
