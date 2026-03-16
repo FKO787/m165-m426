@@ -38,3 +38,19 @@ Deutsch:
 
 - TypeScript  
 - Angular
+
+## Dokumentation
+
+### Setup
+
+- [Requirements](FOLGT)
+- [Configuration](FOLGT)
+
+### Features
+
+- [Anwendungsfälle](FOLGT)
+
+### Konventionen
+
+- [Git Message Guidelines](https://github.com/FKO787/m165-m426/wiki/Git-Message-Guidelines)
+- [Projektdokumentation](https://github.com/FKO787/m165-m426/wiki/Projektdokumentation)
