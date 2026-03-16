@@ -26,9 +26,25 @@ public class UserApi {
         return userRepo.findById(id).orElseThrow();
     }
 
+    // Simple authentication
+    @GetMapping("/users")
+    public boolean authenticateUser(@RequestBody Users loginData) {
+        String loginName = loginData.getName();
+        String loginEmail = loginData.getEmail();
+
+        if (userRepo.existsByNameAndEmail(loginName, loginEmail)) {
+            String loginPassword = loginData.getPassword();
+            String dbPassword = userRepo.findByNameAndEmail(loginName, loginEmail).getPassword();
+            return loginPassword.equals(dbPassword);
+        } else {
+            return false;
+        }
+
+    }
+
     @PostMapping("/users")
-    public void postUser(@RequestParam String name, @RequestParam String email) {
-        userRepo.save(Users.create(name, email));
+    public void postUser(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
+        userRepo.save(Users.create(name, email, password));
     }
 
     @PutMapping("/users/{id}")
