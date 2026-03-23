@@ -27,7 +27,7 @@ public class UserApi {
     }
 
     // Simple authentication
-    @GetMapping("/users")
+    @PostMapping("/users/authenticate")
     public boolean authenticateUser(@RequestBody Users loginData) {
         String loginName = loginData.getName();
         String loginEmail = loginData.getEmail();
@@ -39,7 +39,6 @@ public class UserApi {
         } else {
             return false;
         }
-
     }
 
     @PostMapping("/users")
