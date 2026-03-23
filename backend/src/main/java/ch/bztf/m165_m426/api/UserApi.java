@@ -42,8 +42,8 @@ public class UserApi {
     }
 
     @PostMapping("/users")
-    public void postUser(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        userRepo.save(Users.create(name, email, password));
+    public void postUser(@RequestBody Users newUser) {
+        userRepo.save(newUser);
     }
 
     @PutMapping("/users/{id}")
