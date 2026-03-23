@@ -9,6 +9,7 @@
     "test": "ng test",
     "lint": "ng lint"
   },
+  "type": "module",
   "private": true,
   "packageManager": "npm@11.11.0",
   "dependencies": {
