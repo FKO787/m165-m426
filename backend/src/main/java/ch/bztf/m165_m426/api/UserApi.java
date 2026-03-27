@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 import ch.bztf.m165_m426.entities.Users;
-import ch.bztf.m165_m426.entities.Users.UserRegistrationRequest;
+import ch.bztf.m165_m426.entities.Users.UsersObject;
 import ch.bztf.m165_m426.repositories.UsersRepository;
 
 @RestController
@@ -29,7 +29,7 @@ public class UserApi {
 
     // Simple authentication
     @PostMapping("/users/authenticate")
-    public boolean authenticateUser(@RequestBody UserRegistrationRequest loginData) {
+    public boolean authenticateUser(@RequestBody UsersObject loginData) {
         Users dbUser = userRepo.findByNameAndEmail(loginData.name(), loginData.email());
 
         if (dbUser != null) {
@@ -40,12 +40,12 @@ public class UserApi {
     }
 
     @PostMapping("/users")
-    public void postUser(@RequestBody UserRegistrationRequest newUser) {
+    public void postUser(@RequestBody UsersObject newUser) {
         userRepo.save(Users.create(newUser));
     }
 
     @PutMapping("/users/{id}")
-    public Users replaceUser(@PathVariable Long id, @RequestBody UserRegistrationRequest updatedUser) {
+    public Users replaceUser(@PathVariable Long id, @RequestBody UsersObject updatedUser) {
         Users storedUser = userRepo.findById(id).orElseThrow();
 
         boolean nameChange = !storedUser.getName().equals(updatedUser.name());

@@ -36,7 +36,7 @@ public class Users {
         return new Users(name, email, password);
     }
 
-    public static Users create(UserRegistrationRequest newUser) {
+    public static Users create(UsersObject newUser) {
         return create(newUser.name(), newUser.email(), newUser.password());
     }
 
@@ -69,6 +69,6 @@ public class Users {
     }
 
     // Data Transfer Object (DTO)
-    public record UserRegistrationRequest(String name, String email, String password) {
+    public record UsersObject(String name, String email, String password) {
     }
 }
