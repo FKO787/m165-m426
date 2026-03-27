@@ -9,6 +9,7 @@ import ch.bztf.m165_m426.entities.Users.UsersObject;
 import ch.bztf.m165_m426.repositories.UsersRepository;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserApi {
 
     private final UsersRepository userRepo;
@@ -39,10 +40,23 @@ public class UserApi {
         return false;
     }
 
+    @PostMapping("/users/register")
+    public boolean registerUser(@RequestBody UsersObject loginData) {
+
+        if (!userRepo.existsByEmail(loginData.email())) {
+            userRepo.save(Users.create(loginData));
+        }
+
+        return false;
+    }
+
+    /* For now, directly creating an user is disabled
+
     @PostMapping("/users")
     public void postUser(@RequestBody UsersObject newUser) {
         userRepo.save(Users.create(newUser));
     }
+    */
 
     @PutMapping("/users/{id}")
     public Users replaceUser(@PathVariable Long id, @RequestBody UsersObject updatedUser) {
