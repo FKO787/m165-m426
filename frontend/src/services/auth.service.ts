@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from '../enviroments/enviroment';
-    
+import { environment } from '../enviroments/enviroment.js';
+
 export interface RegisterRequest {
     name: string
     email: string;
