@@ -1,9 +1,9 @@
-﻿<loginlayout>
+<loginlayout>
     <div class="bg-secondary col-4 justify-content-center rounded-5 border-end border-black p-4 text-white">
         <h1 class="mb-2">Register</h1>
         <form (submit)="onSubmit($event)" class="d-flex flex-column align-items-start gap-2">
             <div class="col-12">
-                <label class="form-label">Username</label>
+                <label class="form-label" for="loginForm.name">Username</label>
                 <input [formField]="loginForm.name" class="form-control form-control" type="text">
                 @if (loginForm.name().touched() && loginForm.name().invalid()) {
                     <ul class="error-list">
@@ -14,7 +14,7 @@
                 }
             </div>
             <div class="col-12">
-                <label class="form-label">Email address</label>
+                <label class="form-label" for="loginForm.email">Email address</label>
                 <input [formField]="loginForm.email" class="form-control form-control" type="email" placeholder="name@example.com">
                 @if (loginForm.email().touched() && loginForm.email().invalid()) {
                     <ul class="error-list">
@@ -25,7 +25,7 @@
                 }
             </div>
             <div class="col-12">
-                <label class="form-label">Password</label>
+                <label class="form-label" for="loginForm.password">Password</label>
                 <input [formField]="loginForm.password" class="form-control form-control" type="password">
                 @if (loginForm.password().touched() && loginForm.password().invalid()) {
                     <ul class="error-list">
@@ -36,7 +36,7 @@
                 }
             </div>
             <div class="col-12">
-                <label class="form-label">Confirm password</label>
+                <label class="form-label" for="loginForm.password">Confirm password</label>
                 <input [formField]="loginForm.passwordConfirm" class="form-control form-control" type="password">
                 @if (loginForm.passwordConfirm().touched() && loginForm.passwordConfirm().invalid()) {
                 <ul class="error-list">
