@@ -53,7 +53,8 @@ export class RegisterComponent {
       if (value.length < 8) return { kind: "minLength", message: "Password must be at least 8 characters" };
       if (!/[A-Z]/.test(value)) return { kind: "uppercase", message: "Password must contain at least one uppercase letter" };
       if (!/[0-9]/.test(value)) return { kind: "number", message: "Password must contain at least one number" };
-      if (!new RegExp('[!@#$%^&*()\\-_=+\\[\\]{};:\'",.<>?/\\\\|`~]').test(value)) return { kind: "specialChar", message: "Password must contain at least one special character" }; return null;
+      if (!new RegExp('[!@#$%^&*()\\-_=+\\[\\]{};:\'",.<>?/\\\\|`~]').test(value)) return { kind: "specialChar", message: "Password must contain at least one special character" };
+      return null;
     });
   });
 
