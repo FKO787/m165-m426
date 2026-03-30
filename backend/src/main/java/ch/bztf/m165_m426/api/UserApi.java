@@ -51,14 +51,6 @@ public class UserApi {
         return false;
     }
 
-    /* For now, directly creating an user is disabled
-
-    @PostMapping("/users")
-    public void postUser(@RequestBody UsersObject newUser) {
-        userRepo.save(Users.create(newUser));
-    }
-    */
-
     @PutMapping("/users/{id}")
     public Users replaceUser(@PathVariable Long id, @RequestBody UsersObject updatedUser) {
         Users storedUser = userRepo.findById(id).orElseThrow();
