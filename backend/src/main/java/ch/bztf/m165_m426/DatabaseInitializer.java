@@ -22,11 +22,14 @@ public class DatabaseInitializer {
     }
 
     private void addTestUsers() {
-        userRepo.save(Users.create("Max Mustermann", "max.mustermann@example.org", "password"));
+        // SHA256 of the string "password"
+        final String passwordHash = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
 
-        userRepo.save(Users.create("Esteban Venturello", "eve@bztf.ch", "password"));
-        userRepo.save(Users.create("Flavio Köppel", "fko@bztf.ch", "password"));
-        userRepo.save(Users.create("Tobias Nussbaumer", "tnu@bztf.ch", "password"));
-        userRepo.save(Users.create("Noah Bösch", "nbo@bztf.ch", "password"));
+        userRepo.save(Users.create("Max Mustermann", "max.mustermann@example.org", passwordHash));
+
+        userRepo.save(Users.create("Esteban Venturello", "eve@bztf.ch", passwordHash));
+        userRepo.save(Users.create("Flavio Köppel", "fko@bztf.ch", passwordHash));
+        userRepo.save(Users.create("Tobias Nussbaumer", "tnu@bztf.ch", passwordHash));
+        userRepo.save(Users.create("Noah Bösch", "nbo@bztf.ch", passwordHash));
     }
 }

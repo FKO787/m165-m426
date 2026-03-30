@@ -1,5 +1,6 @@
 package ch.bztf.m165_m426.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,13 +10,16 @@ import jakarta.persistence.Id;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     protected Users() {
@@ -30,6 +34,10 @@ public class Users {
 
     public static Users create(String name, String email, String password) {
         return new Users(name, email, password);
+    }
+
+    public static Users create(UsersObject newUser) {
+        return create(newUser.name(), newUser.email(), newUser.password());
     }
 
     public Long getId() {
@@ -60,4 +68,7 @@ public class Users {
         this.password = password;
     }
 
+    // Data Transfer Object (DTO)
+    public record UsersObject(String name, String email, String password) {
+    }
 }
