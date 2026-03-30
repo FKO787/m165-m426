@@ -31,7 +31,7 @@ public class UserApi {
     // Simple authentication
     @PostMapping("/users/authenticate")
     public boolean authenticateUser(@RequestBody UsersObject loginData) {
-        Users dbUser = userRepo.findByNameAndEmail(loginData.name(), loginData.email());
+        Users dbUser = userRepo.findByEmail(loginData.email());
 
         if (dbUser != null) {
             return loginData.password().equals(dbUser.getPassword());
