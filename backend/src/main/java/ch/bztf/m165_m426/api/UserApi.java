@@ -45,6 +45,7 @@ public class UserApi {
 
         if (!userRepo.existsByEmail(loginData.email())) {
             userRepo.save(Users.create(loginData));
+            return true;
         }
 
         return false;
