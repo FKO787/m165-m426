@@ -19,7 +19,8 @@ public class Users {
     private String password;
 
     protected Users() {
-        // Hibernate requires Entities to have an empty constructor. Its protected so the IDE stops whining.
+        // Hibernate requires Entities to have an empty constructor. Its
+        // protected so the IDE stops whining.
     }
 
     private Users(String name, String email, String password) {
