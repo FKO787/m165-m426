@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 import ch.bztf.m165_m426.entities.Users;
+import ch.bztf.m165_m426.entities.Users.UsersObject;
 import ch.bztf.m165_m426.repositories.UsersRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserApi {
 
     private final UsersRepository userRepo;
@@ -29,34 +31,46 @@ public class UserApi {
 
     // Simple authentication
     @PostMapping("/users/authenticate")
-    public boolean authenticateUser(@RequestBody Users loginData) {
-        String loginName = loginData.getName();
-        String loginEmail = loginData.getEmail();
+    public boolean authenticateUser(@RequestBody UsersObject loginData) {
+        Users dbUser = userRepo.findByEmail(loginData.email());
 
-        if (userRepo.existsByNameAndEmail(loginName, loginEmail)) {
-            String loginPassword = loginData.getPassword();
-            String dbPassword = userRepo.findByNameAndEmail(loginName, loginEmail).getPassword();
-            return loginPassword.equals(dbPassword);
-        } else {
-            return false;
+        if (dbUser != null) {
+            return loginData.password().equals(dbUser.getPassword());
         }
+
+        return false;
     }
 
-    @PostMapping("/users")
-    public void postUser(@RequestBody Users newUser) {
-        userRepo.save(newUser);
+    @PostMapping("/users/register")
+    public boolean registerUser(@RequestBody UsersObject loginData) {
+
+        if (!userRepo.existsByEmail(loginData.email())) {
+            userRepo.save(Users.create(loginData));
+            return true;
+        }
+
+        return false;
     }
 
     @PutMapping("/users/{id}")
-    public Users replaceUser(@PathVariable Long id, @RequestBody Users newUser) {
-        Users savedUser = userRepo.findById(id).orElseThrow();
+    public Users replaceUser(@PathVariable Long id, @RequestBody UsersObject updatedUser) {
+        Users storedUser = userRepo.findById(id).orElseThrow();
 
-        if (!savedUser.equals(newUser)) {
-            savedUser.setName(newUser.getName());
-            savedUser.setEmail(newUser.getEmail());
-            userRepo.save(savedUser);
+        boolean nameChange = !storedUser.getName().equals(updatedUser.name());
+        boolean emailChange = !storedUser.getEmail().equals(updatedUser.email());
+        boolean passwordChange = !storedUser.getPassword().equals(updatedUser.password());
+
+        if (nameChange) {
+            storedUser.setName(updatedUser.name());
         }
-        return savedUser;
+        if (emailChange) {
+            storedUser.setEmail(updatedUser.email());
+        }
+        if (passwordChange) {
+            storedUser.setPassword(updatedUser.password());
+        }
+
+        return userRepo.save(storedUser);
     }
 
     @DeleteMapping("/users/{id}")
