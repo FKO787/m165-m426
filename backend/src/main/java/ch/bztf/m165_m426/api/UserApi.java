@@ -31,7 +31,7 @@ public class UserApi {
     // Simple authentication
     @PostMapping("/users/authenticate")
     public boolean authenticateUser(@RequestBody UsersObject loginData) {
-        Users dbUser = userRepo.findByNameAndEmail(loginData.name(), loginData.email());
+        Users dbUser = userRepo.findByEmail(loginData.email());
 
         if (dbUser != null) {
             return loginData.password().equals(dbUser.getPassword());
@@ -45,18 +45,11 @@ public class UserApi {
 
         if (!userRepo.existsByEmail(loginData.email())) {
             userRepo.save(Users.create(loginData));
+            return true;
         }
 
         return false;
     }
-
-    /* For now, directly creating an user is disabled
-
-    @PostMapping("/users")
-    public void postUser(@RequestBody UsersObject newUser) {
-        userRepo.save(Users.create(newUser));
-    }
-    */
 
     @PutMapping("/users/{id}")
     public Users replaceUser(@PathVariable Long id, @RequestBody UsersObject updatedUser) {

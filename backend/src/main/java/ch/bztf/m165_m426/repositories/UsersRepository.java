@@ -7,6 +7,6 @@ import ch.bztf.m165_m426.entities.Users;
 public interface UsersRepository extends JpaRepository<Users, Long> {
     boolean existsByEmail(String email);
 
-    Users findByNameAndEmail(String name, String email);
+    Users findByEmail(String email);
 
 }
