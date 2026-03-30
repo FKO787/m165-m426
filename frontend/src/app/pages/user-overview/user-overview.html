@@ -1,0 +1,28 @@
+<h2>Benutzerübersicht</h2>
+
+@if (loading()) {
+  <p>Laden...</p>
+} @else if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else if (users().length === 0) {
+  <p>Keine Benutzer vorhanden.</p>
+} @else {
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>E-Mail</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users(); track user.id) {
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
