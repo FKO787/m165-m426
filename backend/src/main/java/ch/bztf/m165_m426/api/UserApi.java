@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ch.bztf.m165_m426.entities.Users;
 import ch.bztf.m165_m426.repositories.UsersRepository;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class UserApi {
 
