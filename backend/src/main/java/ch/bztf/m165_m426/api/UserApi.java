@@ -8,7 +8,6 @@ import ch.bztf.m165_m426.entities.Users;
 import ch.bztf.m165_m426.entities.Users.UsersObject;
 import ch.bztf.m165_m426.repositories.UsersRepository;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserApi {
