@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { email, form, FormField, required, submit, validate } from '@angular/forms/signals';
 import { LoginLayoutComponent } from '../loginLayout/loginLayout.component';
-import { AuthService, ApiError } from '../../services/auth.service';
+import { AuthService, ApiError } from '../../../services/auth.service';
 
 interface LoginData {
     name: string;
@@ -15,13 +15,15 @@ interface LoginData {
 @Component({
     selector: 'register',
     standalone: true,
-    imports: [LoginLayoutComponent, FormField, JsonPipe],
-    styleUrls: ['./register.css'],
+    imports: [LoginLayoutComponent, FormField],
+    styleUrls: ['../loginPages.css'],
     templateUrl: './register.html',
 })
 export class RegisterComponent {
+    private router = inject(Router);
     private readonly authService = inject(AuthService);
 
+    errorMessange = signal('');
     loginModel = signal<LoginData>({
         name: '',
         email: '',
@@ -51,9 +53,10 @@ export class RegisterComponent {
 
             if (!value) return null;
             if (value.length < 8) return { kind: 'minLength', message: 'Password must be at least 8 characters' };
-            if (!/[A-Z]/.test(value)) return { kind: 'uppercase', message: 'Password must contain at least one uppercase letter' };
-            if (!/[0-9]/.test(value)) return { kind: 'number', message: 'Password must contain at least one number' };
-            if (!new RegExp('[!@#$%^&*()\\-_=+\\[\\]{};:\'",.<>?/\\\\|`~]').test(value)) return { kind: 'specialChar', message: 'Password must contain at least one special character' };            return null;
+            //if (!/[A-Z]/.test(value)) return { kind: 'uppercase', message: 'Password must contain at least one uppercase letter' };
+            //if (!/[0-9]/.test(value)) return { kind: 'number', message: 'Password must contain at least one number' };
+            //if (!new RegExp('[!@#$%^&*()\\-_=+\\[\\]{};:\'",.<>?/\\\\|`~]').test(value)) return { kind: 'specialChar', message: 'Password must contain at least one special character' };
+            return null;
         });
     });
 
@@ -70,8 +73,13 @@ export class RegisterComponent {
 
                 this.authService.register({name, email, password: hashedPassword }).subscribe({
                     next: (response) => {
-                        console.log('Registered successfully:', response);
-                        // Router navigation
+                        if (response) {
+                            this.errorMessange.set('');
+                            this.router.navigate(['/login'])
+                        }
+                        else {
+                            this.errorMessange.set('Registration failed. Try an other Email.');
+                        }
                     },
                     error: (error: ApiError) => {
                         console.error('Registration failed:', error.message);

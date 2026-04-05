@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -26,6 +26,9 @@ export class AuthService {
     private readonly http = inject(HttpClient);
     private readonly apiUrl = environment.apiUrl;
 
+    private _isLoggedIn = signal<boolean>(false);
+    readonly isLoggedIn = this._isLoggedIn.asReadonly();
+
     register(data: RegisterRequest): Observable<RegisterResponse> {
         return this.http
             .post<RegisterResponse>(`${this.apiUrl}/users/register`, data)
@@ -33,6 +36,11 @@ export class AuthService {
                 map((response) => response),
                 catchError(this.handleError)
             );
+    }
+
+    restoreSession() {
+        const stored = localStorage.getItem('isLoggedIn');
+        if (stored === 'true') this._isLoggedIn.set(true);
     }
 
     private handleError(error: HttpErrorResponse): Observable<never> {

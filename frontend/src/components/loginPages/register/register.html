@@ -4,7 +4,7 @@
         <form (submit)="onSubmit($event)" class="d-flex flex-column align-items-start gap-2">
             <div class="col-12">
                 <label class="form-label">Username</label>
-                <input [formField]="loginForm.name" class="form-control form-control" type="text">
+                <input [formField]="loginForm.name" class="form-control form-control" type="text" autocomplete="on">
                 @if (loginForm.name().touched() && loginForm.name().invalid()) {
                     <ul class="error-list">
                         @for (error of loginForm.name().errors(); track error) {
@@ -15,7 +15,7 @@
             </div>
             <div class="col-12">
                 <label class="form-label">Email address</label>
-                <input [formField]="loginForm.email" class="form-control form-control" type="email" placeholder="name@example.com">
+                <input [formField]="loginForm.email" class="form-control form-control" type="email" placeholder="name@example.com" autocomplete="on">
                 @if (loginForm.email().touched() && loginForm.email().invalid()) {
                     <ul class="error-list">
                         @for (error of loginForm.email().errors(); track error) {
@@ -26,7 +26,7 @@
             </div>
             <div class="col-12">
                 <label class="form-label">Password</label>
-                <input [formField]="loginForm.password" class="form-control form-control" type="password">
+                <input [formField]="loginForm.password" class="form-control form-control" type="password" autocomplete="on">
                 @if (loginForm.password().touched() && loginForm.password().invalid()) {
                     <ul class="error-list">
                         @for (error of loginForm.password().errors(); track error) {
@@ -37,7 +37,7 @@
             </div>
             <div class="col-12">
                 <label class="form-label">Confirm password</label>
-                <input [formField]="loginForm.passwordConfirm" class="form-control form-control" type="password">
+                <input [formField]="loginForm.passwordConfirm" class="form-control form-control" type="password" autocomplete="on">
                 @if (loginForm.passwordConfirm().touched() && loginForm.passwordConfirm().invalid()) {
                 <ul class="error-list">
                     @for (error of loginForm.passwordConfirm().errors(); track error) {
@@ -49,11 +49,12 @@
             <input type="submit" [disabled]="loginForm().invalid()" class="form-control btn btn-primary" value="Register" />
         </form>
     </div>
-    <div class="d-flex col-8 align-items-center justify-content-center">
+    <div class="d-flex flex-column col-8 align-items-center justify-content-center">
         <h5 class="col-8">
             Register with your email to create an account.<br />
             Only members of the school XY can create an account.<br />
             Make sure to write down your password, so you don't forget it.<br />
         </h5>
+        <h5 class="text-danger col-8">{{errorMessange()}}</h5>
     </div>
 </loginlayout>
