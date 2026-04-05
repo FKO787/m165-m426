@@ -23,6 +23,8 @@ export class RegisterComponent {
     private router = inject(Router);
     private readonly authService = inject(AuthService);
 
+    showPassword = signal(false);
+    showConfirmPassword = signal(false);
     errorMessange = signal('');
     loginModel = signal<LoginData>({
         name: '',
@@ -87,5 +89,12 @@ export class RegisterComponent {
                 });
             },
         });
+    }
+
+    showPasswordClick() {
+        this.showPassword.update((value) => !value);
+    }
+    showConfirmPasswordClick() {
+        this.showConfirmPassword.update((value) => !value);
     }
 }
