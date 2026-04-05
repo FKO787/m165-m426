@@ -1,12 +1,12 @@
 package ch.bztf.m165_m426;
 
-import org.springframework.context.annotation.Bean;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HelloWorld {
 
-    @Bean
+    @PostConstruct
     void Hello() {
         System.out.println("Hello World!");
     }
