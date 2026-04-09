@@ -21,7 +21,6 @@
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "crypto-js": "^4.2.0",
-    "crypto-ts": "^1.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.16.1"
