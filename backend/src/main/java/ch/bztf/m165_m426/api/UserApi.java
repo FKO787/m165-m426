@@ -1,21 +1,27 @@
 package ch.bztf.m165_m426.api;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.*;
 
 import ch.bztf.m165_m426.entities.Users;
 import ch.bztf.m165_m426.entities.Users.UsersObject;
 import ch.bztf.m165_m426.repositories.UsersRepository;
+import ch.bztf.m165_m426.services.JwtService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserApi {
 
     private final UsersRepository userRepo;
+    private final JwtService jwtService;
 
-    public UserApi(UsersRepository userRepo) {
+    public UserApi(UsersRepository userRepo, JwtService jwtService) {
         this.userRepo = userRepo;
+        this.jwtService = jwtService;
     }
 
     @GetMapping("/users")
@@ -28,16 +34,19 @@ public class UserApi {
         return userRepo.findById(id).orElseThrow();
     }
 
-    // Simple authentication
     @PostMapping("/users/authenticate")
-    public boolean authenticateUser(@RequestBody UsersObject loginData) {
+    public AuthResponse authenticateUser(@RequestBody LoginRequest loginData) {
         Users dbUser = userRepo.findByEmail(loginData.email());
 
-        if (dbUser != null) {
-            return loginData.password().equals(dbUser.getPassword());
+        if (dbUser == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
-        return false;
+        if (!loginData.password().equals(dbUser.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        }
+
+        return new AuthResponse(jwtService.generateToken(dbUser.getEmail()));
     }
 
     @PostMapping("/users/register")
@@ -49,6 +58,21 @@ public class UserApi {
         }
 
         return false;
+    }
+
+    @GetMapping("/users/me")
+    public UserData getCurrentUser(Principal principal) {
+        if (principal == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing authentication");
+        }
+
+        String email = principal.getName();
+        Users user = userRepo.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found");
+        }
+
+        return new UserData(user.getId(), user.getName(), user.getEmail());
     }
 
     @PutMapping("/users/{id}")
@@ -75,5 +99,14 @@ public class UserApi {
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id) {
         userRepo.deleteById(id);
+    }
+
+    public record LoginRequest(String email, String password) {
+    }
+
+    public record AuthResponse(String token) {
+    }
+
+    public record UserData(Long id, String name, String email) {
     }
 }
