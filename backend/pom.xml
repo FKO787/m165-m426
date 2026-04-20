@@ -10,15 +10,15 @@
     <name>m165-m426</name>
     <description>Sozialnetzwerk für die Schule</description>
 
-    <properties>
-        <java.version>25</java.version>
-    </properties>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.3</version>
-    </parent>
+	<properties>
+		<java.version>21</java.version>
+	</properties>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.4</version>
+	</parent>
 
     <dependencies>
 
