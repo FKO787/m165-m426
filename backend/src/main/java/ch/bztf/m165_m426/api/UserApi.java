@@ -4,10 +4,12 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import ch.bztf.m165_m426.entities.Users;
+import ch.bztf.m165_m426.entities.Users.LoginRequest;
+import ch.bztf.m165_m426.entities.Users.UserData;
 import ch.bztf.m165_m426.entities.Users.UsersObject;
 import ch.bztf.m165_m426.repositories.UsersRepository;
 import ch.bztf.m165_m426.services.JwtService;
@@ -52,12 +54,12 @@ public class UserApi {
     @PostMapping("/users/register")
     public boolean registerUser(@RequestBody UsersObject loginData) {
 
-        if (!userRepo.existsByEmail(loginData.email())) {
-            userRepo.save(Users.create(loginData));
-            return true;
+        if (userRepo.existsByEmail(loginData.email())) {
+            return false;
         }
 
-        return false;
+        userRepo.save(Users.create(loginData));
+        return true;
     }
 
     @GetMapping("/users/me")
@@ -74,6 +76,8 @@ public class UserApi {
 
         return new UserData(user.getId(), user.getName(), user.getEmail());
     }
+
+    // Remove/Separate into individual actions?
 
     @PutMapping("/users/{id}")
     public Users replaceUser(@PathVariable Long id, @RequestBody UsersObject updatedUser) {
@@ -101,12 +105,6 @@ public class UserApi {
         userRepo.deleteById(id);
     }
 
-    public record LoginRequest(String email, String password) {
-    }
-
     public record AuthResponse(String token) {
-    }
-
-    public record UserData(Long id, String name, String email) {
     }
 }
