@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { RegisterComponent } from '../components//loginPages/register/register.component';
+import { RegisterComponent } from '../components/loginPages/register/register.component';
 import { NotImplementedComponent } from '../components/errorPages/notImplemented/notImplemented.component';
 import { authGuard } from '../services/auth.guard';
 import { redirectGuard } from '../services/rederect.guard';
