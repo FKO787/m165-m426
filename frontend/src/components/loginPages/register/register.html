@@ -1,70 +1,70 @@
 ﻿<loginlayout>
-    <div class="bg-secondary col-4 justify-content-center rounded-5 border-end border-black p-4 text-white">
-        <h1 class="mb-2">Register</h1>
-        <form (submit)="onSubmit($event)" class="d-flex flex-column align-items-start gap-2">
-            <div class="col-12">
-                <label class="form-label" for="name">Username</label>
-                <input id="name" [formField]="loginForm.name" class="form-control" type="text" autocomplete="on">
-                @if (loginForm.name().touched() && loginForm.name().invalid()) {
-                <ul class="error-list">
-                    @for (error of loginForm.name().errors(); track error.kind) {
-                    <li>{{ error.message }}</li>
-                    }
-                </ul>
-                }
-            </div>
-            <div class="col-12">
-                <label class="form-label" for="email">Email address</label>
-                <input id="email" [formField]="loginForm.email" class="form-control" type="email" placeholder="name@example.com" autocomplete="on">
-                @if (loginForm.email().touched() && loginForm.email().invalid()) {
-                <ul class="error-list">
-                    @for (error of loginForm.email().errors(); track error.kind) {
-                    <li>{{ error.message }}</li>
-                    }
-                </ul>
-                }
-            </div>
-            <div class="col-12">
-                <label class="form-label" for="password">Password</label>
-                <div class="input-group">
-                    <input id="password" [formField]="loginForm.password" class="form-control" [type]="showPassword() ? 'text' : 'password'" autocomplete="on">
-                    <button type="button" class="input-group-text" (click)="showPasswordClick()">
-                        <i class="bi" [class.bi-eye]="showPassword()" [class.bi-eye-slash]="!showPassword()"></i>
-                    </button>
-                </div>
-                @if (loginForm.password().touched() && loginForm.password().invalid()) {
-                <ul class="error-list">
-                    @for (error of loginForm.password().errors(); track error.kind) {
-                    <li>{{ error.message }}</li>
-                    }
-                </ul>
-                }
-            </div>
-            <div class="col-12">
-                <label class="form-label" for="passwordConfirm">Confirm password</label>
-                <div class="input-group">
-                    <input id="passwordConfirm" [formField]="loginForm.passwordConfirm" class="form-control" [type]="showConfirmPassword() ? 'text' : 'password'" autocomplete="on">
-                    <button type="button" class="input-group-text" (click)="showConfirmPasswordClick()">
-                        <i class="bi" [class.bi-eye]="showConfirmPassword()" [class.bi-eye-slash]="!showConfirmPassword()"></i>
-                    </button>
-                </div>
-                @if (loginForm.passwordConfirm().touched() && loginForm.passwordConfirm().invalid()) {
-                <ul class="error-list">
-                    @for (error of loginForm.passwordConfirm().errors(); track error.kind) {
-                    <li>{{ error.message }}</li>
-                    }
-                </ul>
-                }
-            </div>
-            <input type="submit" [disabled]="loginForm().invalid()" class="form-control btn btn-primary" value="Register" />
-        </form>
-    </div>
-    <div class="d-flex flex-column col-8 align-items-center justify-content-center">
-        <h5 class="col-8">
-            Register with your email to create an account.<br />
-            Only members of the school XY can create an account.<br />
-            Make sure to write down your password, so you don't forget it.<br />
-        </h5>
-        <h5 class="text-danger col-8">{{errorMessange()}}</h5>
-    </div>
+  <div class="bg-secondary col-4 justify-content-center rounded-5 border-end border-black p-4 text-white">
+    <h1 class="mb-2">Register</h1>
+    <form class="d-flex flex-column align-items-start gap-2" (submit)="onSubmit($event)">
+      <div class="col-12">
+        <label class="form-label" for="name">Username</label>
+        <input class="form-control" id="name" [formField]="loginForm.name" type="text" autocomplete="on" />
+        @if (loginForm.name().touched() && loginForm.name().invalid()) {
+          <ul class="error-list">
+            @for (error of loginForm.name().errors(); track error.kind) {
+              <li>{{ error.message }}</li>
+            }
+          </ul>
+        }
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="email">Email address</label>
+        <input class="form-control" id="email" [formField]="loginForm.email" type="email" placeholder="name@example.com" autocomplete="on" />
+        @if (loginForm.email().touched() && loginForm.email().invalid()) {
+          <ul class="error-list">
+            @for (error of loginForm.email().errors(); track error.kind) {
+              <li>{{ error.message }}</li>
+            }
+          </ul>
+        }
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-group">
+          <input class="form-control" id="password" [formField]="loginForm.password" [type]="showPassword() ? 'text' : 'password'" autocomplete="on" />
+          <button class="input-group-text" (click)="showPasswordClick()" type="button">
+            <i class="bi" [class.bi-eye]="showPassword()" [class.bi-eye-slash]="!showPassword()"></i>
+          </button>
+        </div>
+        @if (loginForm.password().touched() && loginForm.password().invalid()) {
+          <ul class="error-list">
+            @for (error of loginForm.password().errors(); track error.kind) {
+              <li>{{ error.message }}</li>
+            }
+          </ul>
+        }
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="passwordConfirm">Confirm password</label>
+        <div class="input-group">
+          <input class="form-control" id="passwordConfirm" [formField]="loginForm.passwordConfirm" [type]="showConfirmPassword() ? 'text' : 'password'" autocomplete="on" />
+          <button class="input-group-text" (click)="showConfirmPasswordClick()" type="button">
+            <i class="bi" [class.bi-eye]="showConfirmPassword()" [class.bi-eye-slash]="!showConfirmPassword()"></i>
+          </button>
+        </div>
+        @if (loginForm.passwordConfirm().touched() && loginForm.passwordConfirm().invalid()) {
+          <ul class="error-list">
+            @for (error of loginForm.passwordConfirm().errors(); track error.kind) {
+              <li>{{ error.message }}</li>
+            }
+          </ul>
+        }
+      </div>
+      <input class="form-control btn btn-primary" [disabled]="loginForm().invalid()" type="submit" value="Register" />
+    </form>
+  </div>
+  <div class="d-flex flex-column col-8 align-items-center justify-content-center">
+    <h5 class="col-8">
+      Register with your email to create an account.<br />
+      Only members of the school XY can create an account.<br />
+      Make sure to write down your password, so you don't forget it.<br />
+    </h5>
+    <h5 class="text-danger col-8">{{ errorMessange() }}</h5>
+  </div>
 </loginlayout>
