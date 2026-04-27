@@ -1,16 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth.service.js';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'root',
-    imports: [RouterOutlet],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
 })
 export class App implements OnInit {
-    private auth = inject(AuthService);
+  private auth = inject(AuthService);
 
-    ngOnInit() {
-        this.auth.restoreSession();
-    }
+  ngOnInit() {
+    this.auth.restoreSession();
+  }
 }
