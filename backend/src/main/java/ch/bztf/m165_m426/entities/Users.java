@@ -71,4 +71,10 @@ public class Users {
     // Data Transfer Object (DTO)
     public record UsersObject(String name, String email, String password) {
     }
+
+    public record LoginRequest(String email, String password) {
+    }
+
+    public record UserData(Long id, String name, String email) {
+    }
 }

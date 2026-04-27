@@ -1,21 +1,29 @@
 package ch.bztf.m165_m426.api;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import ch.bztf.m165_m426.entities.Users;
+import ch.bztf.m165_m426.entities.Users.LoginRequest;
+import ch.bztf.m165_m426.entities.Users.UserData;
 import ch.bztf.m165_m426.entities.Users.UsersObject;
 import ch.bztf.m165_m426.repositories.UsersRepository;
+import ch.bztf.m165_m426.services.JwtService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserApi {
 
     private final UsersRepository userRepo;
+    private final JwtService jwtService;
 
-    public UserApi(UsersRepository userRepo) {
+    public UserApi(UsersRepository userRepo, JwtService jwtService) {
         this.userRepo = userRepo;
+        this.jwtService = jwtService;
     }
 
     @GetMapping("/users")
@@ -28,28 +36,48 @@ public class UserApi {
         return userRepo.findById(id).orElseThrow();
     }
 
-    // Simple authentication
     @PostMapping("/users/authenticate")
-    public boolean authenticateUser(@RequestBody UsersObject loginData) {
+    public AuthResponse authenticateUser(@RequestBody LoginRequest loginData) {
         Users dbUser = userRepo.findByEmail(loginData.email());
 
-        if (dbUser != null) {
-            return loginData.password().equals(dbUser.getPassword());
+        if (dbUser == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
-        return false;
+        if (!loginData.password().equals(dbUser.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        }
+
+        return new AuthResponse(jwtService.generateToken(dbUser.getEmail()));
     }
 
     @PostMapping("/users/register")
     public boolean registerUser(@RequestBody UsersObject loginData) {
 
-        if (!userRepo.existsByEmail(loginData.email())) {
-            userRepo.save(Users.create(loginData));
-            return true;
+        if (userRepo.existsByEmail(loginData.email())) {
+            return false;
         }
 
-        return false;
+        userRepo.save(Users.create(loginData));
+        return true;
     }
+
+    @GetMapping("/users/me")
+    public UserData getCurrentUser(Principal principal) {
+        if (principal == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing authentication");
+        }
+
+        String email = principal.getName();
+        Users user = userRepo.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found");
+        }
+
+        return new UserData(user.getId(), user.getName(), user.getEmail());
+    }
+
+    // Remove/Separate into individual actions?
 
     @PutMapping("/users/{id}")
     public Users replaceUser(@PathVariable Long id, @RequestBody UsersObject updatedUser) {
@@ -75,5 +103,8 @@ public class UserApi {
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id) {
         userRepo.deleteById(id);
+    }
+
+    public record AuthResponse(String token) {
     }
 }
