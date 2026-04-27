@@ -2,8 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { email, form, FormField, required, submit, validate } from '@angular/forms/signals';
-import { LoginLayoutComponent } from '../loginLayout/loginLayout.component.js';
-import { AuthService, ApiError } from '../../../services/auth.service.js';
+import { LoginLayoutComponent } from '../loginLayout/loginLayout.component';
+import { AuthService, ApiError } from '../../../services/auth.service';
 
 interface LoginData {
   name: string

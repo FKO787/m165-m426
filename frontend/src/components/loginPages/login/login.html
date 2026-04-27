@@ -1,47 +1,43 @@
 ﻿<loginlayout>
-    <div class="bg-secondary col-4 justify-content-center rounded-5 border-end border-black p-4 text-white">
-        <h1 class="mb-2">Login</h1>
-        <form (submit)="onSubmit($event)" class="d-flex flex-column align-items-start gap-2">
-            <div class="col-12">
-                <label class="form-label">Email address</label>
-                <input [formField]="loginForm.email" class="form-control form-control" type="email" placeholder="name@example.com" autocomplete="on">
-                @if (loginForm.email().touched() && loginForm.email().invalid()) {
-                <ul class="error-list">
-                    @for (error of loginForm.email().errors(); track error) {
-                    <li>{{ error.message }}</li>
-                    }
-                </ul>
-                }
-            </div>
-            <div class="col-12">
-                <label class="form-label">Password</label>
-                <div class="input-group">
-                    @if (showPassword()){
-                    <input [formField]="loginForm.password" class="form-control form-control" type="text" autocomplete="on">
-                    <span class="input-group-text" (click)="showPasswordClick()"><i class="bi bi-eye"></i></span>
-                    }
-                    @else {
-                    <input [formField]="loginForm.password" class="form-control form-control" type="password" autocomplete="on">
-                    <span class="input-group-text" (click)="showPasswordClick()"><i class="bi bi-eye-slash"></i></span>
-                    }
-                </div>
-                @if (loginForm.password().touched() && loginForm.password().invalid()) {
-                <ul class="error-list">
-                    @for (error of loginForm.password().errors(); track error) {
-                    <li>{{ error.message }}</li>
-                    }
-                </ul>
-                }
-            </div>
-            <input type="submit" [disabled]="loginForm().invalid()" class="form-control btn btn-primary" value="Login" />
-        </form>
-    </div>
-    <div class="d-flex flex-column col-8 align-items-center justify-content-center">
-        <h5 class="col-8">
-            Login with your account email.<br />
-            If you don't have an account you can register yourself <a routerLink="/register">here</a>.<br />
-            If you forgot your password, you have no way to reset it. :)<br />
-        </h5>
-        <h5 class="text-danger col-8">{{errorMessange()}}</h5>
-    </div>
+  <div class="bg-secondary col-4 justify-content-center rounded-5 border-end border-black p-4 text-white">
+    <h1 class="mb-2">Login</h1>
+    <form class="d-flex flex-column align-items-start gap-2" (submit)="onSubmit($event)">
+      <div class="col-12">
+        <label for="" class="form-label">Email address</label>
+        <input class="form-control" [formField]="loginForm.email" type="email" placeholder="name@example.com" autocomplete="on" />
+        @if (loginForm.email().touched() && loginForm.email().invalid()) {
+          <ul class="error-list">
+            @for (error of loginForm.email().errors(); track error) {
+              <li>{{ error.message }}</li>
+            }
+          </ul>
+        }
+      </div>
+      <div class="col-12">
+        <label for="" class="form-label">Password</label>
+        <div class="input-group">
+          <input class="form-control" [formField]="loginForm.password" [type]="showPassword() ? 'text' : 'password'" autocomplete="on" />
+          <button class="input-group-text" (click)="showPasswordClick()" type="button">
+            <i class="bi" [class.bi-eye]="showPassword()" [class.bi-eye-slash]="!showPassword()"></i>
+          </button>
+        </div>
+        @if (loginForm.password().touched() && loginForm.password().invalid()) {
+          <ul class="error-list">
+            @for (error of loginForm.password().errors(); track error) {
+              <li>{{ error.message }}</li>
+            }
+          </ul>
+        }
+      </div>
+      <button class="form-control btn btn-primary" [disabled]="loginForm().invalid()" type="submit">Login</button>
+    </form>
+  </div>
+  <div class="d-flex flex-column col-8 align-items-center justify-content-center">
+    <h5 class="col-8">
+      Login with your account email.<br />
+      If you don't have an account you can register yourself <a routerLink="/register">here</a>.<br />
+      If you forgot your password, you have no way to reset it. :)<br />
+    </h5>
+    <h5 class="text-danger col-8">{{ errorMessange() }}</h5>
+  </div>
 </loginlayout>
