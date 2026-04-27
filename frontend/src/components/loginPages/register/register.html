@@ -3,8 +3,8 @@
         <h1 class="mb-2">Register</h1>
         <form (submit)="onSubmit($event)" class="d-flex flex-column align-items-start gap-2">
             <div class="col-12">
-                <label class="form-label">Username</label>
-                <input [formField]="loginForm.name" class="form-control form-control" type="text" autocomplete="on">
+                <label class="form-label" for="name">Username</label>
+                <input id="name" [formField]="loginForm.name" class="form-control" type="text" autocomplete="on">
                 @if (loginForm.name().touched() && loginForm.name().invalid()) {
                 <ul class="error-list">
                     @for (error of loginForm.name().errors(); track error.kind) {
@@ -14,8 +14,8 @@
                 }
             </div>
             <div class="col-12">
-                <label class="form-label">Email address</label>
-                <input [formField]="loginForm.email" class="form-control form-control" type="email" placeholder="name@example.com" autocomplete="on">
+                <label class="form-label" for="email">Email address</label>
+                <input id="email" [formField]="loginForm.email" class="form-control" type="email" placeholder="name@example.com" autocomplete="on">
                 @if (loginForm.email().touched() && loginForm.email().invalid()) {
                 <ul class="error-list">
                     @for (error of loginForm.email().errors(); track error.kind) {
@@ -25,16 +25,12 @@
                 }
             </div>
             <div class="col-12">
-                <label class="form-label">Password</label>
+                <label class="form-label" for="password">Password</label>
                 <div class="input-group">
-                    @if (showPassword()){
-                    <input [formField]="loginForm.password" class="form-control form-control" type="text" autocomplete="on">
-                    <span class="input-group-text" (click)="showPasswordClick()"><i class="bi bi-eye"></i></span>
-                    }
-                    @else {
-                    <input [formField]="loginForm.password" class="form-control form-control" type="password" autocomplete="on">
-                    <span class="input-group-text" (click)="showPasswordClick()"><i class="bi bi-eye-slash"></i></span>
-                    }
+                    <input id="password" [formField]="loginForm.password" class="form-control" [type]="showPassword() ? 'text' : 'password'" autocomplete="on">
+                    <button type="button" class="input-group-text" (click)="showPasswordClick()">
+                        <i class="bi" [class.bi-eye]="showPassword()" [class.bi-eye-slash]="!showPassword()"></i>
+                    </button>
                 </div>
                 @if (loginForm.password().touched() && loginForm.password().invalid()) {
                 <ul class="error-list">
@@ -45,24 +41,20 @@
                 }
             </div>
             <div class="col-12">
-                <label class="form-label">Confirm password</label>
+                <label class="form-label" for="passwordConfirm">Confirm password</label>
                 <div class="input-group">
-                    @if (showConfirmPassword()){
-                    <input [formField]="loginForm.passwordConfirm" class="form-control form-control" type="text" autocomplete="on">
-                    <span class="input-group-text" (click)="showConfirmPasswordClick()"><i class="bi bi-eye"></i></span>
-                    }
-                    @else {
-                    <input [formField]="loginForm.passwordConfirm" class="form-control form-control" type="password" autocomplete="on">
-                    <span class="input-group-text" (click)="showConfirmPasswordClick()"><i class="bi bi-eye-slash"></i></span>
-                    }
+                    <input id="passwordConfirm" [formField]="loginForm.passwordConfirm" class="form-control" [type]="showConfirmPassword() ? 'text' : 'password'" autocomplete="on">
+                    <button type="button" class="input-group-text" (click)="showConfirmPasswordClick()">
+                        <i class="bi" [class.bi-eye]="showConfirmPassword()" [class.bi-eye-slash]="!showConfirmPassword()"></i>
+                    </button>
                 </div>
-                    @if (loginForm.passwordConfirm().touched() && loginForm.passwordConfirm().invalid()) {
-                    <ul class="error-list">
-                        @for (error of loginForm.passwordConfirm().errors(); track error.kind) {
-                        <li>{{ error.message }}</li>
-                        }
-                    </ul>
+                @if (loginForm.passwordConfirm().touched() && loginForm.passwordConfirm().invalid()) {
+                <ul class="error-list">
+                    @for (error of loginForm.passwordConfirm().errors(); track error.kind) {
+                    <li>{{ error.message }}</li>
                     }
+                </ul>
+                }
             </div>
             <input type="submit" [disabled]="loginForm().invalid()" class="form-control btn btn-primary" value="Register" />
         </form>
