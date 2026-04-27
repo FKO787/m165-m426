@@ -7,10 +7,10 @@ import { LoginComponent } from '../components/loginPages/login/login.component';
 import { publicGuard } from '../services/public.guard';
 
 export const routes: Routes = [
-    { path: 'register', title: 'Register', component: RegisterComponent, canActivate: [publicGuard] },
-    { path: 'login', title: 'Login', component: LoginComponent, canActivate: [publicGuard] },
+  { path: 'register', title: 'Register', component: RegisterComponent, canActivate: [publicGuard] },
+  { path: 'login', title: 'Login', component: LoginComponent, canActivate: [publicGuard] },
 
-    { path: '', title: 'Home', component: NotImplementedComponent, canActivate: [authGuard] }, // TODO: MainpageComponent
+  { path: '', title: 'Home', component: NotImplementedComponent, canActivate: [authGuard] }, // TODO: MainpageComponent
 
-    { path: '**', canActivate: [redirectGuard], component: NotImplementedComponent }
+  { path: '**', canActivate: [redirectGuard], component: NotImplementedComponent },
 ];

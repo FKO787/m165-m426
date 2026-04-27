@@ -3,10 +3,10 @@ import { Router } from '@angular/router'
 import { AuthService } from "../../../services/auth.service";
 
 @Component({
-    selector: 'notimplemented',
-    standalone: true,
-    imports: [],
-    templateUrl: './notImplemented.html',
+  selector: 'notimplemented',
+  standalone: true,
+  imports: [],
+  templateUrl: './notImplemented.html',
 })
 export class NotImplementedComponent {
     private auth = inject(AuthService);

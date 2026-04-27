@@ -17,16 +17,16 @@ export interface LoginRequest {
 }
 
 export interface RegisterResponse {
-    success: boolean;
+  success: boolean
 }
 
 export interface ApiError {
-    message: string;
-    statusCode: number;
+  message: string
+  statusCode: number
 }
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class AuthService {
     private readonly http = inject(HttpClient);
