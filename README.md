@@ -51,3 +51,19 @@ Deutsch:
 
 - TypeScript  
 - Angular
+
+## Dokumentation
+
+### Setup
+
+- [Requirements](http://github.com/FKO787/m165-m426/wiki/Requirements)
+- [Configuration](https://github.com/FKO787/m165-m426/wiki/Configuration)
+
+### Features
+
+- [Anwendungsfälle](FOLGT)
+
+### Konventionen
+
+- [Git Message Guidelines](https://github.com/FKO787/m165-m426/wiki/Git-Message-Guidelines)
+- [Projektdokumentation](https://github.com/FKO787/m165-m426/wiki/Projektdokumentation)
