@@ -22,10 +22,10 @@ jobs:
       - name: Node.js einrichten
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Abhängigkeiten installieren
-        run: npm ci
+        run: npm install
 
       - name: Lint mit Auto-Fix
         run: npm run lint:fix
