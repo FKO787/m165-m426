@@ -3,7 +3,7 @@
     <h1 class="mb-2">Login</h1>
     <form class="d-flex flex-column align-items-start gap-2" (submit)="onSubmit($event)">
       <div class="col-12">
-        <label for="" class="form-label">Email address</label>
+        <label class="form-label" for="">Email address</label>
         <input class="form-control" [formField]="loginForm.email" type="email" placeholder="name@example.com" autocomplete="on" />
         @if (loginForm.email().touched() && loginForm.email().invalid()) {
           <ul class="error-list">
@@ -14,7 +14,7 @@
         }
       </div>
       <div class="col-12">
-        <label for="" class="form-label">Password</label>
+        <label class="form-label" for="">Password</label>
         <div class="input-group">
           <input class="form-control" [formField]="loginForm.password" [type]="showPassword() ? 'text' : 'password'" autocomplete="on" />
           <button class="input-group-text" (click)="showPasswordClick()" type="button">
