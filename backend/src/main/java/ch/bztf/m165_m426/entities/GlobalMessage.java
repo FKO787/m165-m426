@@ -44,12 +44,16 @@ public class GlobalMessage {
         this.parentMessage = parentMessage;
     }
 
-    public static GlobalMessage createMessage(Users createdBy, LocalDateTime createdAt, String message) {
-        return new GlobalMessage(createdBy, createdAt, message, null);
+    public static GlobalMessage create(Users createdBy, LocalDateTime createdAt, String message, GlobalMessage parentMessage) {
+        return new GlobalMessage(createdBy, createdAt, message, parentMessage);
     }
 
-    public static GlobalMessage createReply(Users createdBy, LocalDateTime createdAt, String message, GlobalMessage parentMessage) {
-        return new GlobalMessage(createdBy, createdAt, message, parentMessage);
+    public static GlobalMessage createMessage(Users createdBy, String message) {
+        return create(createdBy, LocalDateTime.now(), message, null);
+    }
+
+    public static GlobalMessage createReply(Users createdBy, String message, GlobalMessage parentMessage) {
+        return create(createdBy, LocalDateTime.now(), message, parentMessage);
     }
 
     public Long getId() {

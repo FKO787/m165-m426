@@ -34,20 +34,20 @@ public class DatabaseInitializer {
         final String pwdHash = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
 
         Users muster = userRepo.save(Users.create("Max Mustermann", "max.mustermann@example.org", pwdHash));
-        messageRepo.save(GlobalMessage.createMessage(muster, now, "TestNachricht"));
+        messageRepo.save(GlobalMessage.create(muster, now, "TestNachricht", null));
 
         Users esteban = userRepo.save(Users.create("Esteban Venturello", "eve@bztf.ch", pwdHash));
         Users flavio = userRepo.save(Users.create("Flavio Köppel", "fko@bztf.ch", pwdHash));
         Users tobias = userRepo.save(Users.create("Tobias Nussbaumer", "tnu@bztf.ch", pwdHash));
         Users noah = userRepo.save(Users.create("Noah Bösch", "nbo@bztf.ch", pwdHash));
 
-        GlobalMessage estebMessage = messageRepo.save(GlobalMessage.createMessage(esteban, now.plusSeconds(15), "Hallo!"));
+        GlobalMessage estebMessage = messageRepo.save(GlobalMessage.create(esteban, now.plusSeconds(15), "Hallo!", null));
 
-        messageRepo.save(GlobalMessage.createMessage(flavio, now.plusSeconds(30), "Wilkommen"));
-        messageRepo.save(GlobalMessage.createMessage(tobias, now.plusSeconds(45), "sup"));
+        messageRepo.save(GlobalMessage.create(flavio, now.plusSeconds(30), "Wilkommen", null));
+        messageRepo.save(GlobalMessage.create(tobias, now.plusSeconds(45), "sup", null));
 
-        GlobalMessage noahReply = messageRepo.save(GlobalMessage.createReply(noah, now.plusSeconds(60), "Hallo, wie läufts?", estebMessage));
-        messageRepo.save(GlobalMessage.createReply(esteban, now.plusSeconds(75), "Ganz okay", noahReply));
+        GlobalMessage noahReply = messageRepo.save(GlobalMessage.create(noah, now.plusSeconds(60), "Hallo, wie läufts?", estebMessage));
+        messageRepo.save(GlobalMessage.create(esteban, now.plusSeconds(75), "Ganz okay", noahReply));
 
     }
 }
