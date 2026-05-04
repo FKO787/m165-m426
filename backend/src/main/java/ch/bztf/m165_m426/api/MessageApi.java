@@ -27,8 +27,7 @@ public class MessageApi {
 
     @GetMapping("/messages")
     public List<MessageApiObject> getAllMessages() {
-        return messageRepo.findAll()
-                .stream()
+        return messageRepo.findAll().stream()
                 .map(message -> message.toMessageApiObject())
                 .toList();
     }
@@ -37,6 +36,11 @@ public class MessageApi {
     public MessageApiObject getMessage(@PathVariable Long id) {
         return messageRepo.findById(id).orElseThrow()
                 .toMessageApiObject();
+    }
+
+    @GetMapping("/messages/{id}/replies")
+    public List<MessageApiObject> getMessageReplies(@PathVariable Long id) {
+        return messageRepo.getReplyTree(id);
     }
 
     @PostMapping("/messages")
