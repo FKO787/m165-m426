@@ -83,4 +83,20 @@ public class GlobalMessage {
     public GlobalMessage getParentMessage() {
         return parentMessage;
     }
+
+    // DTO for API, so that the JSON does not include the entire User object and parent messages
+    public record MessageApiObject(
+            Long id,
+            Long createdById, String createdByName,
+            LocalDateTime createdAt, String message, boolean isDeleted,
+            Long parentMessageId) {
+    }
+
+    public MessageApiObject toMessageApiObject() {
+        return new MessageApiObject(
+                id,
+                createdBy.getId(), createdBy.getName(),
+                createdAt, message, isDeleted,
+                parentMessage != null ? parentMessage.getId() : null);
+    }
 }

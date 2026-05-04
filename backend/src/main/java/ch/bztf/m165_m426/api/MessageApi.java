@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.springframework.web.bind.annotation.*;
 
 import ch.bztf.m165_m426.entities.GlobalMessage;
+import ch.bztf.m165_m426.entities.GlobalMessage.MessageApiObject;
 import ch.bztf.m165_m426.repositories.GlobalMessageRepository;
 
 @RestController
@@ -19,13 +20,17 @@ public class MessageApi {
     }
 
     @GetMapping("/messages")
-    public List<GlobalMessage> getAllMessages() {
-        return messageRepo.findAll();
+    public List<MessageApiObject> getAllMessages() {
+        return messageRepo.findAll()
+                .stream()
+                .map(message -> message.toMessageApiObject())
+                .toList();
     }
 
     @GetMapping("/messages/{id}")
-    public GlobalMessage getMessage(@PathVariable Long id) {
-        return messageRepo.findById(id).orElseThrow();
+    public MessageApiObject getMessage(@PathVariable Long id) {
+        return messageRepo.findById(id).orElseThrow()
+                .toMessageApiObject();
     }
 
     @PostMapping("/messages")
