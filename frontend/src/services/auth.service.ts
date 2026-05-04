@@ -1,5 +1,5 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -98,9 +98,7 @@ export class AuthService {
 
   private startInactivityTimer(): void {
     this.clearInactivityTimer();
-    this.inactivityTimer = setTimeout(() => {
-      this.logout();
-    }, this.INACTIVITY_LIMIT);
+    this.inactivityTimer = setTimeout(() => this.logout(), this.INACTIVITY_LIMIT);
   }
 
   private clearInactivityTimer(): void {
@@ -122,10 +120,9 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    const apiError: ApiError = {
+    return throwError(() => ({
       message: error.error?.message ?? 'An unexpected error occurred',
       statusCode: error.status,
-    };
-    return throwError(() => apiError);
+    }) as ApiError);
   }
 }

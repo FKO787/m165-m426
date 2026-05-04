@@ -22,7 +22,7 @@ export class LoginComponent {
   private readonly authService = inject(AuthService);
 
   showPassword = signal(false);
-  errorMessange = signal('');
+  errorMessage = signal('');
   loginModel = signal<LoginData>({
     email: '',
     password: '',
@@ -44,16 +44,16 @@ export class LoginComponent {
         this.authService.login({ email, password: hashedPassword }).subscribe({
           next: (response) => {
             if (response) {
-              this.errorMessange.set('');
+              this.errorMessage.set('');
               this.router.navigate(['']);
             }
             else {
-              this.errorMessange.set('Login failed. Check your email and password.');
+              this.errorMessage.set('Login failed. Check your email and password.');
             }
           },
           error: (error: ApiError) => {
             console.error('Login failed:', error.message);
-            this.errorMessange.set(error.message);
+            this.errorMessage.set(error.message);
           },
         });
       },
