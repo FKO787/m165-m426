@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
-import * as CryptoJS from 'crypto-js';
+import hashAlgorithm from '../../security/hashAlgorithm';
 import { email, form, FormField, required, submit } from '@angular/forms/signals';
 import { LoginLayoutComponent } from '../loginLayout/loginLayout.component';
 import { AuthService, ApiError } from '../../../services/auth.service';
@@ -39,12 +39,8 @@ export class LoginComponent {
     event.preventDefault();
     submit(this.loginForm, {
       action: async () => {
-        function sha256(value: string): string {
-          return CryptoJS.SHA256(value).toString(CryptoJS.enc.Hex);
-        }
-
         const { email, password } = this.loginModel();
-        const hashedPassword = sha256(password);
+        const hashedPassword = hashAlgorithm(password);
 
         this.authService.login({ email, password: hashedPassword }).subscribe({
           next: (response) => {
