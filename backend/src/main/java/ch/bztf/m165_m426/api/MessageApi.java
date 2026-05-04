@@ -6,17 +6,23 @@ import java.util.NoSuchElementException;
 import org.springframework.web.bind.annotation.*;
 
 import ch.bztf.m165_m426.entities.GlobalMessage;
+import ch.bztf.m165_m426.entities.GlobalMessage.CreateMessageRequest;
+import ch.bztf.m165_m426.entities.GlobalMessage.CreateReplyRequest;
 import ch.bztf.m165_m426.entities.GlobalMessage.MessageApiObject;
+import ch.bztf.m165_m426.entities.Users;
 import ch.bztf.m165_m426.repositories.GlobalMessageRepository;
+import ch.bztf.m165_m426.repositories.UsersRepository;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class MessageApi {
 
     private final GlobalMessageRepository messageRepo;
+    private final UsersRepository userRepo;
 
-    public MessageApi(GlobalMessageRepository messageRepo) {
+    public MessageApi(GlobalMessageRepository messageRepo, UsersRepository userRepo) {
         this.messageRepo = messageRepo;
+        this.userRepo = userRepo;
     }
 
     @GetMapping("/messages")
@@ -34,15 +40,23 @@ public class MessageApi {
     }
 
     @PostMapping("/messages")
-    public GlobalMessage sendMessage(
-            @RequestBody GlobalMessage message) {
-        return messageRepo.save(message);
+    public MessageApiObject sendMessage(@RequestBody CreateMessageRequest message) {
+        // getReferenceById skips the inmediate repository call
+        Users user = userRepo.getReferenceById(message.createdById());
+
+        return messageRepo.save(
+                GlobalMessage.createMessage(user, message.message()))
+                .toMessageApiObject();
     }
 
-    @PostMapping("/messages/{id}/reply")
-    public GlobalMessage replyToMessage(@PathVariable Long id, @RequestBody GlobalMessage reply) {
-        messageRepo.findById(id).orElseThrow();
-        return messageRepo.save(reply);
+    @PostMapping("/messages/{id}/replies")
+    public MessageApiObject replyToMessage(@RequestBody CreateReplyRequest reply) {
+        Users user = userRepo.getReferenceById(reply.createdById());
+        GlobalMessage parentMessage = messageRepo.getReferenceById(reply.parentMessageId());
+
+        return messageRepo.save(
+                GlobalMessage.createReply(user, reply.message(), parentMessage))
+                .toMessageApiObject();
     }
 
     @DeleteMapping("/messages/{id}")

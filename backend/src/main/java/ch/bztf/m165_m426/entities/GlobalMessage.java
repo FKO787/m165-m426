@@ -99,4 +99,10 @@ public class GlobalMessage {
                 createdAt, message, isDeleted,
                 parentMessage != null ? parentMessage.getId() : null);
     }
+
+    public record CreateMessageRequest(Long createdById, String message) {
+    }
+
+    public record CreateReplyRequest(Long createdById, String message, Long parentMessageId) {
+    }
 }
