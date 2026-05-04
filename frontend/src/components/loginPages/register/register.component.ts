@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import hashAlgorithm from '../../security/hashAlgorithm';
 import { email, form, FormField, required, submit, validate } from '@angular/forms/signals';
+import { Router } from '@angular/router';
+import { ApiError, AuthService } from '../../../services/auth.service';
+import hashAlgorithm from '../../security/hashAlgorithm';
 import { LoginLayoutComponent } from '../loginLayout/loginLayout.component';
-import { AuthService, ApiError } from '../../../services/auth.service';
 
 interface LoginData {
   name: string
@@ -81,6 +81,7 @@ export class RegisterComponent {
           },
           error: (error: ApiError) => {
             console.error('Registration failed:', error.message);
+            this.errorMessange.set(error.message);
           },
         });
       },

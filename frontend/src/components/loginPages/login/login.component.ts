@@ -1,10 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { JsonPipe } from '@angular/common';
-import hashAlgorithm from '../../security/hashAlgorithm';
 import { email, form, FormField, required, submit } from '@angular/forms/signals';
+import { Router } from '@angular/router';
+import { ApiError, AuthService } from '../../../services/auth.service';
+import hashAlgorithm from '../../security/hashAlgorithm';
 import { LoginLayoutComponent } from '../loginLayout/loginLayout.component';
-import { AuthService, ApiError } from '../../../services/auth.service';
 
 interface LoginData {
   email: string
@@ -14,7 +13,7 @@ interface LoginData {
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [LoginLayoutComponent, FormField, JsonPipe, RouterLink],
+  imports: [LoginLayoutComponent, FormField],
   styleUrls: ['../loginPages.css'],
   templateUrl: './login.html',
 })
@@ -53,6 +52,7 @@ export class LoginComponent {
             }
           },
           error: (error: ApiError) => {
+            console.error('Login failed:', error.message);
             this.errorMessange.set(error.message);
           },
         });
