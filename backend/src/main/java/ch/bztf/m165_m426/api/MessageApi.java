@@ -65,10 +65,9 @@ public class MessageApi {
 
     @DeleteMapping("/messages/{id}")
     public void deleteMessage(@PathVariable Long id) {
-        if (!messageRepo.existsById(id)) {
-            throw new NoSuchElementException("Message with id " + id + " not found");
-        }
+        GlobalMessage message = messageRepo.findById(id).orElseThrow(() -> new NoSuchElementException("Message with id " + id + " not found"));
 
-        messageRepo.deleteById(id);
+        message.deleteMessage();
+        messageRepo.save(message);
     }
 }
