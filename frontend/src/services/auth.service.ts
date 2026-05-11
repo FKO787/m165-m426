@@ -16,8 +16,8 @@ export interface LoginRequest {
   password: string
 }
 
-export interface RegisterResponse {
-  success: boolean
+export interface AuthResponse {
+  token: string
 }
 
 export interface ApiError {
@@ -32,13 +32,12 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly apiUrl = environment.apiUrl;
+  private readonly tokenKey = 'jwt_token';
 
   private readonly INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 min in ms
   private inactivityTimer: ReturnType<typeof setTimeout> | null = null;
 
-  private readonly _isLoggedIn = signal<boolean>(
-    localStorage.getItem('isLoggedIn') === 'true',
-  );
+  private readonly _isLoggedIn = signal<boolean>(Boolean(localStorage.getItem(this.tokenKey)));
 
   private readonly _lastActivity = signal<number>(
     parseInt(localStorage.getItem('lastActivity') ?? '0', 10),
@@ -59,21 +58,21 @@ export class AuthService {
     }
   }
 
-  register(data: RegisterRequest): Observable<RegisterResponse> {
+  register(data: RegisterRequest): Observable<boolean> {
     return this.http
-      .post<RegisterResponse>(`${this.apiUrl}/users/register`, data)
+      .post<boolean>(`${this.apiUrl}/users/register`, data)
       .pipe(catchError(this.handleError));
   }
 
-  login(data: LoginRequest): Observable<boolean> {
+  login(data: LoginRequest): Observable<AuthResponse> {
     return this.http
-      .post<boolean>(`${this.apiUrl}/users/authenticate`, data)
+      .post<AuthResponse>(`${this.apiUrl}/users/authenticate`, data)
       .pipe(
         tap((response) => {
-          if (response) {
+          if (response?.token) {
+            localStorage.setItem(this.tokenKey, response.token);
             this._isLoggedIn.set(true);
             this.updateLastActivity();
-            localStorage.setItem('isLoggedIn', 'true');
             this.startInactivityTimer();
             this.listenToUserActivity();
           }
@@ -84,7 +83,7 @@ export class AuthService {
 
   logout(): void {
     this._isLoggedIn.set(false);
-    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('lastActivity');
     this.clearInactivityTimer();
     this.router.navigate(['/login']);
