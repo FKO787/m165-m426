@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import ch.bztf.m165_m426.entities.GlobalMessage;
 import ch.bztf.m165_m426.entities.GlobalMessage.CreateMessageRequest;
-import ch.bztf.m165_m426.entities.GlobalMessage.CreateReplyRequest;
 import ch.bztf.m165_m426.entities.GlobalMessage.MessageApiObject;
 import ch.bztf.m165_m426.entities.Users;
 import ch.bztf.m165_m426.repositories.GlobalMessageRepository;
@@ -54,9 +53,9 @@ public class MessageApi {
     }
 
     @PostMapping("/messages/{id}/replies")
-    public MessageApiObject replyToMessage(@RequestBody CreateReplyRequest reply) {
+    public MessageApiObject replyToMessage(@PathVariable Long id, @RequestBody CreateMessageRequest reply) {
         Users user = userRepo.getReferenceById(reply.createdById());
-        GlobalMessage parentMessage = messageRepo.getReferenceById(reply.parentMessageId());
+        GlobalMessage parentMessage = messageRepo.getReferenceById(id);
 
         return messageRepo.save(
                 GlobalMessage.createReply(user, reply.message(), parentMessage))

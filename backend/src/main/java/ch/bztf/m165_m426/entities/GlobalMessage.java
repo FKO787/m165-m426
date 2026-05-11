@@ -102,7 +102,4 @@ public class GlobalMessage {
 
     public record CreateMessageRequest(Long createdById, String message) {
     }
-
-    public record CreateReplyRequest(Long createdById, String message, Long parentMessageId) {
-    }
 }
