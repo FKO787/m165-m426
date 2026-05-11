@@ -3,6 +3,7 @@ package ch.bztf.m165_m426.api;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import ch.bztf.m165_m426.entities.GlobalMessage;
@@ -33,7 +34,8 @@ public class MessageApi {
 
     @GetMapping("/messages/{id}")
     public MessageApiObject getMessage(@PathVariable Long id) {
-        return messageRepo.findById(id).orElseThrow()
+        return messageRepo.findById(id)
+                .orElseThrow(() -> messageNotFoundException(id))
                 .toMessageApiObject();
     }
 
@@ -62,11 +64,15 @@ public class MessageApi {
                 .toMessageApiObject();
     }
 
+    @Transactional
     @DeleteMapping("/messages/{id}")
     public void deleteMessage(@PathVariable Long id) {
-        GlobalMessage message = messageRepo.findById(id).orElseThrow(() -> new NoSuchElementException("Message with id " + id + " not found"));
+        messageRepo.findById(id)
+                .orElseThrow(() -> messageNotFoundException(id))
+                .deleteMessage();
+    }
 
-        message.deleteMessage();
-        messageRepo.save(message);
+    private NoSuchElementException messageNotFoundException(Long id) {
+        return new NoSuchElementException("Message with id " + id + " not found");
     }
 }
