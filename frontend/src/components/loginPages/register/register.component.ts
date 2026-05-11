@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { email, form, FormField, required, submit, validate } from '@angular/forms/signals';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { ApiError, AuthService } from '../../../services/auth.service';
 import hashAlgorithm from '../../security/hashAlgorithm';
 import { LoginLayoutComponent } from '../loginLayout/loginLayout.component';
@@ -15,7 +15,7 @@ interface LoginData {
 @Component({
   selector: 'register',
   standalone: true,
-  imports: [LoginLayoutComponent, FormField],
+    imports: [LoginLayoutComponent, FormField, RouterLink],
   styleUrls: ['../loginPages.css'],
   templateUrl: './register.html',
 })
@@ -26,6 +26,7 @@ export class RegisterComponent {
   showPassword = signal(false);
   showConfirmPassword = signal(false);
   errorMessage = signal('');
+  errorMessange = this.errorMessage;
   loginModel = signal<LoginData>({
     name: '',
     email: '',
