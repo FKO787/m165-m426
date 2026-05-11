@@ -1,0 +1,15 @@
+{
+  "tabWidth": 2,
+  "printWidth": 250,
+  "endOfLine": "auto",
+  "htmlWhitespaceSensitivity": "strict",
+  "plugins": ["prettier-plugin-multiline-arrays", "prettier-plugin-organize-attributes"],
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ]
+}
