@@ -12,9 +12,9 @@ Ist das Mindestziel erreicht worden, können weitere Features definiert werden.
 
 ## Aufstarten vom Projekt
 
-1. Docker: `cd ./docker/postgres && docker compose up -d`
-2. Frontend: `cd ./frontend && npm install && ng serve`
-3. Backend: `cd ./backend && ./mvnw.cmd spring-boot:run`
+1. Docker: `cd ./docker/postgres ; docker compose up -d`
+2. Frontend: `cd ./frontend ; npm install ; ng serve`
+3. Backend: `cd ./backend ; ./mvnw.cmd spring-boot:run`
 
 One-Liner (Benötigt Windows Terminal)
 ```PowerShell
