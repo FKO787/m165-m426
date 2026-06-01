@@ -23,7 +23,6 @@ export class LoginComponent {
 
   showPassword = signal(false);
   errorMessage = signal('');
-  errorMessange = this.errorMessage;
   loginModel = signal<LoginData>({
     email: '',
     password: '',

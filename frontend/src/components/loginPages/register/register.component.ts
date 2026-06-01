@@ -26,7 +26,6 @@ export class RegisterComponent {
   showPassword = signal(false);
   showConfirmPassword = signal(false);
   errorMessage = signal('');
-  errorMessange = this.errorMessage;
   loginModel = signal<LoginData>({
     name: '',
     email: '',
