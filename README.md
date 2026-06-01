@@ -16,13 +16,7 @@ Ist das Mindestziel erreicht worden, können weitere Features definiert werden.
 |------|----------------|---------|
 | Docker Desktop | aktuell | Muss **gestartet sein**, bevor Schritt 1 ausgeführt wird |
 | Node.js | 22 (LTS) | Node 20 funktioniert mit Warnungen; 22 empfohlen |
-| Java JDK | 25 | `JAVA_HOME` muss auf JDK 25 zeigen |
-
-**`JAVA_HOME` dauerhaft auf JDK 25 setzen (PowerShell — einmalig):**
-```PowerShell
-[System.Environment]::SetEnvironmentVariable("JAVA_HOME", "C:\Program Files\Eclipse Adoptium\jdk-25.0.2.10-hotspot", "User")
-```
-Danach PowerShell neu starten. Den genauen Pfad entsprechend der installierten JDK-Version anpassen.
+| Java JDK | 21 | |
 
 Detaillierte Setup-Dokumentation:
 - [Requirements](http://github.com/FKO787/m165-m426/wiki/Requirements)
@@ -82,7 +76,7 @@ Deutsch:
 
 ### Backend
 
-- Java 25 (Spring Boot 4 benötigt mindestens Java 25; `JAVA_HOME` muss entsprechend gesetzt sein)
+- Java 21
 - Spring Boot als Framework
 - Maven als Build Tool
 
