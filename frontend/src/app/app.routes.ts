@@ -6,6 +6,7 @@ import { redirectGuard } from '../services/rederect.guard';
 import { LoginComponent } from '../components/loginPages/login/login.component';
 import { publicGuard } from '../services/public.guard';
 import { LayoutPageComponent } from '../components/Layout/layoutPage.component';
+import { AllChatComponent } from '../components/chats/allChat/allChat.component';
 
 export const routes: Routes = [
   { path: 'register', title: 'Register', component: RegisterComponent, canActivate: [publicGuard] },
@@ -16,7 +17,7 @@ export const routes: Routes = [
     component: LayoutPageComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', title: 'Global Chat', component: NotImplementedComponent }, // TODO: GlobalChatComponent
+      { path: '', title: 'All Chat', component: AllChatComponent },
       { path: 'profile', title: 'Profile', component: NotImplementedComponent }, // TODO: ProfileComponent
     ],
   },
