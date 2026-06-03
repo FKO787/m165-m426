@@ -19,7 +19,7 @@ Ist das Mindestziel erreicht worden, können weitere Features definiert werden.
 | Java JDK | 21 | |
 
 Detaillierte Setup-Dokumentation:
-- [Requirements](http://github.com/FKO787/m165-m426/wiki/Requirements)
+- [Requirements](https://github.com/FKO787/m165-m426/wiki/Requirements)
 - [Configuration](https://github.com/FKO787/m165-m426/wiki/Configuration)
 
 ## Projekt starten
