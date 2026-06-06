@@ -1,0 +1,18 @@
+<div class="d-flex flex-column h-100">
+  <div class="flex-grow-1 overflow-auto p-3 d-flex flex-column gap-2 mx-5">
+    @for (msg of messages(); track msg.id) {
+      <div class="d-flex flex-column align-items-start" style="max-width: 70%">
+        <small class="text-primary fw-semibold ms-2 mb-1">{{ msg.createdByName }}</small>
+        <div class="bg-light border rounded-3 px-3 py-2 text-dark">{{ msg.message }}</div>
+        <small class="text-muted ms-2 mt-1">{{ msg.createdAt | date: "HH:mm" }}</small>
+      </div>
+    }
+  </div>
+
+  <div class="border-top d-flex align-items-center gap-2 p-2 mx-5">
+    <input class="form-control rounded-pill" placeholder="Messages cannot be send at the moment" disabled />
+    <button class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; flex-shrink: 0" disabled>
+      <i class="bi bi-send-fill"></i>
+    </button>
+  </div>
+</div>
